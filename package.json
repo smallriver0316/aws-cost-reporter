@@ -1,0 +1,24 @@
+{
+  "name": "aws-cost-repoter",
+  "version": "1.0.0",
+  "description": "Lambda set to send information of cost explorer with e-mail",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smallriver0316/aws-cost-repoter.git"
+  },
+  "keywords": [
+    "lambda",
+    "cost",
+    "explorer"
+  ],
+  "author": "smallriver0316",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smallriver0316/aws-cost-repoter/issues"
+  },
+  "homepage": "https://github.com/smallriver0316/aws-cost-repoter#readme"
+}
