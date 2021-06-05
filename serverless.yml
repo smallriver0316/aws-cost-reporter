@@ -13,7 +13,7 @@
 
 service: aws-cost-repoter
 # app and org for use with dashboard.serverless.com
-#app: your-app-name
+app: aws-cost-reporter
 #org: your-org-name
 
 # You can pin your service to only deploy with a specific Serverless version
@@ -26,8 +26,9 @@ provider:
   lambdaHashingVersion: 20201221
 
 # you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+# CAUTION: region must be us-east-1 in order to access CostExplorer
+  stage: dev
+  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -50,16 +51,24 @@ provider:
 #    variable1: value1
 
 # you can add packaging information here
-#package:
-#  patterns:
-#    - '!exclude-me.js'
-#    - '!exclude-me-dir/**'
-#    - include-me.js
-#    - include-me-dir/**
+package:
+ patterns:
+   - '!README.md'
+   - '!templates/**'
+   - '!node_modules/**'
+   - '!package.json'
+   - '!package-lock.json'
+   - '!serverless.yml'
+
+# plugins:
+#   - serverless-pseudo-parameters
 
 functions:
-  hello:
-    handler: handler.hello
+  costReporter:
+    handler: src/lambda/handler.costReporter
+    role: CostReporterLambdaRole
+    description: 'function to read cost exploer and send SNS'
+    timeout: 300
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -101,13 +110,5 @@ functions:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+resources:
+  - ${file(./templates/iam.yml)}

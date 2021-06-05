@@ -1,18 +1,20 @@
 'use strict';
+var AWS = require('aws-sdk');
+var CostExplorer = require('../aws/cost-explorer');
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+var ceClient = new AWS.CostExplorer({
+  apiVersion: '2017-12-25',
+});
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+module.exports.costReporter = async (event, context, callback) => {
+  try {
+    const costExplorer = new CostExplorer(ceClient);
+    const ret = await costExplorer.getCostCategories();
+    callback(null, {
+      statusCode: 200,
+      body: JSON.stringify(ret),
+    });
+  } catch(err) {
+    callback(err);
+  }
 };
