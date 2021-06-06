@@ -4,11 +4,12 @@ module.exports = class CostExplorer {
     this.client = client;
   }
 
-  getCostCategories = async () => {
+  getCostCategories = async (startDate, endDate) => {
+    console.log(`[CostExplorer][getCostCategories] Start getCostCategories between ${startDate} and ${endDate}`);
     const params = {
       TimePeriod: {
-        Start: '2021-05-01',
-        End: '2021-05-31'
+        Start: startDate,
+        End: endDate
       }
     };
     return new Promise((resolve, reject) => {
@@ -25,6 +26,7 @@ module.exports = class CostExplorer {
   }
 
   getCostAndUsage = async (startDate, endDate) => {
+    console.log(`[CostExplorer][getCostAndUsage] Start getCostAndUsage between ${startDate} and ${endDate}`);
     const params = {
       Granularity: 'MONTHLY',
       Metrics: [
