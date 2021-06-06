@@ -27,6 +27,7 @@ Resources:
                   - ce:DescribeCostCategoryDefinition
                   - ce:ListCostCategoryDefinitions
                   - ce:GetCostCategories
+                  - ce:GetCostAndUsage
                 Resource: "*"
       Tags:
         -

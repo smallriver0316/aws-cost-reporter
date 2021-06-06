@@ -55,7 +55,6 @@ package:
  patterns:
    - '!README.md'
    - '!templates/**'
-   - '!node_modules/**'
    - '!package.json'
    - '!package-lock.json'
    - '!serverless.yml'
