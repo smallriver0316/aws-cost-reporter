@@ -62,6 +62,9 @@ package:
 # plugins:
 #   - serverless-pseudo-parameters
 
+custom:
+  config: ${file(./config/.config.${opt:stage, self:provider.stage}.yml)}
+
 functions:
   costReporter:
     handler: src/lambda/handler.costReporter
@@ -111,3 +114,4 @@ functions:
 # you can add CloudFormation resource templates here
 resources:
   - ${file(./templates/iam.yml)}
+  - ${file(./templates/sns.yml)}

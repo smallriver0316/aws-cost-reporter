@@ -29,6 +29,10 @@ Resources:
                   - ce:GetCostCategories
                   - ce:GetCostAndUsage
                 Resource: "*"
+              - Effect: Allow
+                Action:
+                  - sns:publish
+                Resource: "*"
       Tags:
         -
           Key: "AppName"
