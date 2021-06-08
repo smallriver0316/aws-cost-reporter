@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/smallriver0316/aws-cost-repoter#readme",
   "dependencies": {
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "serverless-pseudo-parameters": "^2.5.0"
   },
   "devDependencies": {
     "aws-sdk": "^2.922.0",

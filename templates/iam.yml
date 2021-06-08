@@ -32,7 +32,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - sns:publish
-                Resource: "*"
+                Resource: "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:CostReporterSnsTopic"
       Tags:
         -
           Key: "AppName"

@@ -59,8 +59,8 @@ package:
    - '!package-lock.json'
    - '!serverless.yml'
 
-# plugins:
-#   - serverless-pseudo-parameters
+plugins:
+  - serverless-pseudo-parameters
 
 custom:
   config: ${file(./config/.config.${opt:stage, self:provider.stage}.yml)}
@@ -71,6 +71,8 @@ functions:
     role: CostReporterLambdaRole
     description: 'function to read cost exploer and send SNS'
     timeout: 300
+    environment:
+      SNS_TOPIC_ARN: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:CostReporterSnsTopic
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
