@@ -116,4 +116,5 @@ functions:
 # you can add CloudFormation resource templates here
 resources:
   - ${file(./templates/iam.yml)}
+  - ${file(./templates/event.yml)}
   - ${file(./templates/sns.yml)}

@@ -1,5 +1,5 @@
 # AWSTemplateFormatVersion: "2010-09-09"
-# Description: "IAM Role template"
+# Description: "SNS Topic template"
 Resources:
   CostReporterSns:
     Type: AWS::SNS::Topic
