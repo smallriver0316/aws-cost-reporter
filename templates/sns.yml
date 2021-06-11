@@ -1,0 +1,15 @@
+# AWSTemplateFormatVersion: "2010-09-09"
+# Description: "SNS Topic template"
+Resources:
+  CostReporterSns:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: "AwsCostRepoterSNS"
+      TopicName: "CostReporterSnsTopic-${self:custom.stage}"
+      Subscription:
+        - Protocol: "email"
+          Endpoint: ${self:custom.config.EMAIL}
+      Tags:
+        -
+          Key: "AppName"
+          Value: "CostReporter"

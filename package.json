@@ -1,0 +1,37 @@
+{
+  "name": "aws-cost-repoter",
+  "version": "1.0.0",
+  "description": "Lambda set to send information of cost explorer with e-mail",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smallriver0316/aws-cost-repoter.git"
+  },
+  "keywords": [
+    "lambda",
+    "cost",
+    "explorer"
+  ],
+  "author": "smallriver0316",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smallriver0316/aws-cost-repoter/issues"
+  },
+  "homepage": "https://github.com/smallriver0316/aws-cost-repoter#readme",
+  "dependencies": {
+    "moment": "^2.29.1",
+    "serverless-pseudo-parameters": "^2.5.0"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.922.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0"
+  }
+}
