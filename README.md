@@ -1,4 +1,4 @@
-# aws-cost-repoter
+# aws-cost-reporter
 
 Lambda set to send information of cost explorer.
 
