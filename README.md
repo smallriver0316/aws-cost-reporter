@@ -5,6 +5,8 @@ Lambda set to send information of cost explorer.
 You received following message by email.
 
 ```txt
+Subject: AWS Cost Weekly Report
+
 From YYYY-MM-01 to YYYY-MM-DD(today)
 Current Cost in this month: XXXX USD
 Usage Quantity: ZZZZ
@@ -16,6 +18,12 @@ It is necessary to write email address into config/.config.{stage}.yml for SNS t
 
 ```yml
 EMAIL: <subscription email of SNS>
+```
+
+Install libraries
+
+```bash
+npm install
 ```
 
 ## How to deploy
