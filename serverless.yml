@@ -63,6 +63,7 @@ plugins:
   - serverless-pseudo-parameters
 
 custom:
+  stage: ${opt:stage, self:provider.stage}
   config: ${file(./config/.config.${opt:stage, self:provider.stage}.yml)}
 
 functions:
@@ -72,7 +73,7 @@ functions:
     description: 'function to read cost exploer and send SNS'
     timeout: 300
     environment:
-      SNS_TOPIC_ARN: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:CostReporterSnsTopic
+      SNS_TOPIC_ARN: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:CostReporterSnsTopic-${self:custom.stage}
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

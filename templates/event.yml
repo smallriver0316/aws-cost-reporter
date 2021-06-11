@@ -5,17 +5,17 @@ Resources:
     Type: AWS::Events::Rule
     Properties:
       Description: "Cloudwatch event for invocation of CostReporter Lambda"
-      Name: "AwsCostReportEvent"
+      Name: "AwsCostReportEvent-${self:custom.stage}"
       ScheduleExpression: "cron(0 0 ? * SUN *)"
       State: "ENABLED"
       Targets:
-        - Arn: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:aws-cost-repoter-${opt:stage, self:provider.stage}-costReporter
-          Id: CostReporterEventTargetId-${opt:stage, self:provider.stage}
+        - Arn: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:aws-cost-repoter-${self:custom.stage}-costReporter
+          Id: CostReporterEventTargetId-${self:custom.stage}
 
   CostReporterLambdaInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
-      FunctionName: aws-cost-repoter-${opt:stage, self:provider.stage}-costReporter
+      FunctionName: aws-cost-repoter-${self:custom.stage}-costReporter
       Principal: events.amazonaws.com
       SourceArn: !GetAtt CostReporterEvent.Arn

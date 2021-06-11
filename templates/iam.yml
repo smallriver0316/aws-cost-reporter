@@ -5,7 +5,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       Path: "/"
-      RoleName: "CostReporterLambdaRole"
+      RoleName: "CostReporterLambdaRole-${self:custom.stage}"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -17,7 +17,7 @@ Resources:
       ManagedPolicyArns:
         - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
       Policies:
-        - PolicyName: "CostReporterLambdaRole"
+        - PolicyName: "CostReporterLambdaRole-${self:custom.stage}"
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
@@ -32,7 +32,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - sns:publish
-                Resource: "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:CostReporterSnsTopic"
+                Resource: "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:CostReporterSnsTopic-${self:custom.stage}"
       Tags:
         -
           Key: "AppName"

@@ -23,7 +23,7 @@ function createMessage (report) {
     }
     let usageQuantity = '';
     if (result.Total.UsageQuantity) {
-      usageQuantity = result.Total.UsageQuantity;
+      usageQuantity = result.Total.UsageQuantity.Amount;
     }
     msg = `From ${startDate} to ${endDate}\nCurrent Cost in this month: ${totalCost}\nUsage Quantity: ${usageQuantity}`;
   }
