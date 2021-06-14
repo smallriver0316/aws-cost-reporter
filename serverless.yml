@@ -54,6 +54,7 @@ provider:
 package:
  patterns:
    - '!README.md'
+   - '!LICENSE'
    - '!templates/**'
    - '!package.json'
    - '!package-lock.json'

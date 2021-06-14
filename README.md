@@ -2,14 +2,30 @@
 
 Lambda set to send information of cost explorer.
 
-You received following message by email.
+You will receive such a following message by email.
 
 ```txt
 Subject: AWS Cost Weekly Report
 
 From YYYY-MM-01 to YYYY-MM-DD(today)
-Current Cost in this month: XXXX USD
-Usage Quantity: ZZZZ
+
+Current Cost in this month: XXXXX USD
+
+----------
+
+AWS Cost Explorer: XXXX USD
+
+AWS Key Management Service: XXXX USD
+
+Amazon EC2 Container Registry (ECR): XXXX USD
+
+EC2 - Other: XXXX USD
+
+Amazon Relational Database Service: XXXX USD
+
+Amazon Simple Storage Service: XXXX USD
+
+Tax: XXXX USD
 ```
 
 ## How to prepare

@@ -28,6 +28,7 @@ Resources:
                   - ce:ListCostCategoryDefinitions
                   - ce:GetCostCategories
                   - ce:GetCostAndUsage
+                  - ce:GetDimensionValues
                 Resource: "*"
               - Effect: Allow
                 Action:

@@ -25,19 +25,46 @@ module.exports = class CostExplorer {
     });
   }
 
+  getDimensionValues = async (startDate, endDate) => {
+    console.log(`[CostExplorer][getDimensionValues] Start getDimensionValues between ${startDate} and ${endDate}`);
+    const params = {
+      Dimension: 'SERVICE',
+      TimePeriod: {
+        Start: startDate,
+        End: endDate
+      },
+      Context: 'COST_AND_USAGE'
+    };
+    return new Promise((resolve, reject) => {
+      return this.client.getDimensionValues(params, (err, data) => {
+        if (err) {
+          console.error('[CostExplorer][getDimensionValues][Error] Failed to get dimension values');
+          reject(err);
+        } else {
+          console.log('[CostExplorer][getDimensionValues] Succeeded to get dimension values');
+          resolve(data);
+        }
+      });
+    });
+  }
+
   getCostAndUsage = async (startDate, endDate) => {
     console.log(`[CostExplorer][getCostAndUsage] Start getCostAndUsage between ${startDate} and ${endDate}`);
     const params = {
       Granularity: 'MONTHLY',
       Metrics: [
-        'BlendedCost',
+        'UnblendedCost',
         'AmortizedCost',
         'UsageQuantity'
       ],
       TimePeriod: {
         Start: startDate,
         End: endDate
-      }
+      },
+      GroupBy: [{
+        Type: 'DIMENSION',
+        Key: 'SERVICE'
+      }]
     };
     return new Promise((resolve, reject) => {
       return this.client.getCostAndUsage(params, (err, data) => {

@@ -17,15 +17,31 @@ function createMessage (report) {
     const result = report.ResultsByTime[0];
     const startDate = result.TimePeriod.Start;
     const endDate = result.TimePeriod.End;
-    let totalCost = '';
-    if (result.Total.BlendedCost) {
-      totalCost = `${result.Total.BlendedCost.Amount} ${result.Total.BlendedCost.Unit}`;
+
+    let totalCost = 0;
+    const services = [];
+    const costs = [];
+    if (result.Groups) {
+      result.Groups.forEach(group => {
+        if (group.Metrics.UnblendedCost.Amount) {
+          const cost = Number(group.Metrics.UnblendedCost.Amount);
+          if (cost > 0) {
+            services.push(group.Keys[0]);
+            costs.push(cost);
+            totalCost += cost;
+          }
+        }
+      });
     }
-    let usageQuantity = '';
-    if (result.Total.UsageQuantity) {
-      usageQuantity = result.Total.UsageQuantity.Amount;
-    }
-    msg = `From ${startDate} to ${endDate}\nCurrent Cost in this month: ${totalCost}\nUsage Quantity: ${usageQuantity}`;
+
+    const msgs = [];
+    msgs.push(`From ${startDate} to ${endDate}`);
+    msgs.push(`Current Cost in this month: ${totalCost} USD`);
+    msgs.push('----------');
+    services.forEach((service, idx) => {
+      msgs.push(`${service}: ${costs[idx]} USD`);
+    });
+    msg = msgs.join('\n\n');
   }
   return msg;
 }
@@ -36,17 +52,17 @@ module.exports.costReporter = async (event, context, callback) => {
     const endDate = moment().format('YYYY-MM-DD');
 
     const costExplorer = new CostExplorer(ceClient);
-    const ceRet = await costExplorer.getCostAndUsage(startDate, endDate);
-    console.log(JSON.stringify(ceRet));
+    const costUsage = await costExplorer.getCostAndUsage(startDate, endDate);
+    console.log(JSON.stringify(costUsage));
 
-    const msg = createMessage(ceRet);
+    const msg = createMessage(costUsage);
 
     const sns = new SNS(snsClient);
-    const snsRet = await sns.publish(msg);
+    const ret = await sns.publish(msg);
 
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify(snsRet)
+      body: JSON.stringify(ret)
     });
   } catch (err) {
     callback(err);
