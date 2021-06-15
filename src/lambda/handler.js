@@ -18,30 +18,46 @@ function createMessage (report) {
     const startDate = result.TimePeriod.Start;
     const endDate = result.TimePeriod.End;
 
-    let totalCost = 0;
-    const services = [];
-    const costs = [];
+    const msgs = [];
+    msgs.push(`From ${startDate} to ${endDate}`);
+
+    // In case of Total result included
+    if (result.Total) {
+      if (result.Total.UnblendedCost) {
+        msgs.push(`Current Total Cost in this month: ${result.Total.UnblendedCost.Amount} ${result.Total.UnblendedCost.Unit}`);
+      }
+      if (result.Total.UsageQuantity) {
+        msgs.push(`Usage Quantity: ${result.Total.UsageQuantity.Amount}`);
+      }
+      msg = msgs.join('\n[n');
+    }
+
+    // In case of Groups result included
     if (result.Groups) {
+      let totalCost = 0;
+      const services = [];
+      const costs = [];
+      const usages = [];
       result.Groups.forEach(group => {
-        if (group.Metrics.UnblendedCost.Amount) {
+        if (group.Metrics.UnblendedCost) {
           const cost = Number(group.Metrics.UnblendedCost.Amount);
           if (cost > 0) {
-            services.push(group.Keys[0]);
+            services.push(group.Keys.join(', '));
             costs.push(cost);
             totalCost += cost;
+            if (group.Metrics.UsageQuantity) {
+              usages.push(Number(group.Metrics.UsageQuantity.Amount));
+            }
           }
         }
       });
+      msgs.push(`Current Total Cost in this month: ${totalCost} USD`);
+      msgs.push('----------');
+      services.forEach((service, idx) => {
+        msgs.push(`${service}: ${costs[idx]} USD\nUsageQuantity: ${usages[idx]}`);
+      });
+      msg = msgs.join('\n\n');
     }
-
-    const msgs = [];
-    msgs.push(`From ${startDate} to ${endDate}`);
-    msgs.push(`Current Cost in this month: ${totalCost} USD`);
-    msgs.push('----------');
-    services.forEach((service, idx) => {
-      msgs.push(`${service}: ${costs[idx]} USD`);
-    });
-    msg = msgs.join('\n\n');
   }
   return msg;
 }
