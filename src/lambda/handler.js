@@ -29,7 +29,7 @@ function createMessage (report) {
       if (result.Total.UsageQuantity) {
         msgs.push(`Usage Quantity: ${result.Total.UsageQuantity.Amount}`);
       }
-      msg = msgs.join('\n[n');
+      msg = msgs.join('\n\n');
     }
 
     // In case of Groups result included
@@ -45,16 +45,19 @@ function createMessage (report) {
             services.push(group.Keys.join(', '));
             costs.push(cost);
             totalCost += cost;
+
+            let usage = 0;
             if (group.Metrics.UsageQuantity) {
-              usages.push(Number(group.Metrics.UsageQuantity.Amount));
+              usage = Number(group.Metrics.UsageQuantity.Amount);
             }
+            usages.push(usage);
           }
         }
       });
       msgs.push(`Current Total Cost in this month: ${totalCost} USD`);
       msgs.push('----------');
       services.forEach((service, idx) => {
-        msgs.push(`${service}: ${costs[idx]} USD\nUsageQuantity: ${usages[idx]}`);
+        msgs.push(`${service}: ${costs[idx]} USD\nUsage Quantity: ${usages[idx]}`);
       });
       msg = msgs.join('\n\n');
     }

@@ -30,6 +30,14 @@ Tax: XXXX USD
 
 ## How to prepare
 
+This application uses Serverless Framework for deployment.
+It reads your AWS account name.
+So set it as environmental value.
+
+```bash
+export AWS_PROFILE=<Your AWS Account Name>
+```
+
 It is necessary to write email address into config/.config.{stage}.yml for SNS topic subscription.
 
 ```yml
