@@ -33,7 +33,7 @@ function createMessage (report) {
     }
 
     // In case of Groups result included
-    if (result.Groups) {
+    if (result.Groups && msgs.length === 1) {
       let totalCost = 0;
       const services = [];
       const costs = [];
@@ -64,6 +64,8 @@ function createMessage (report) {
   }
   return msg;
 }
+
+module.exports.createMessage = createMessage;
 
 module.exports.costReporter = async (event, context, callback) => {
   try {
