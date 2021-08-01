@@ -69,8 +69,14 @@ module.exports.createMessage = createMessage;
 
 module.exports.costReporter = async (event, context, callback) => {
   try {
-    const startDate = moment().startOf('month').format('YYYY-MM-DD');
-    const endDate = moment().format('YYYY-MM-DD');
+    const start = moment().startOf('month');
+    const end = moment();
+    if (!end.isAfter(start)) {
+      throw new Error('cost duration must be more than 1 day.');
+    }
+
+    const startDate = start.format('YYYY-MM-DD');
+    const endDate = end.format('YYYY-MM-DD');
 
     const costExplorer = new CostExplorer(ceClient);
     const costUsage = await costExplorer.getCostAndUsage(startDate, endDate);
