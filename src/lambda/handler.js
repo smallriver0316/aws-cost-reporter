@@ -69,22 +69,37 @@ module.exports.createMessage = createMessage;
 
 module.exports.costReporter = async (event, context, callback) => {
   try {
-    const startDate = moment().startOf('month').format('YYYY-MM-DD');
-    const endDate = moment().format('YYYY-MM-DD');
+    const start = moment().startOf('month');
+    const end = moment();
 
-    const costExplorer = new CostExplorer(ceClient);
-    const costUsage = await costExplorer.getCostAndUsage(startDate, endDate);
-    console.log(JSON.stringify(costUsage));
+    if (!end.isAfter(start)) {
+      const today = start.format('YYYY-MM-DD');
+      const msg = `Today is ${today}.\n\nNo Cost is generated yet in this month.`;
+      const sns = new SNS(snsClient);
+      const ret = await sns.publish(msg);
 
-    const msg = createMessage(costUsage);
+      callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(ret)
+      });
+    } else {
+      const startDate = start.format('YYYY-MM-DD');
+      const endDate = end.format('YYYY-MM-DD');
 
-    const sns = new SNS(snsClient);
-    const ret = await sns.publish(msg);
+      const costExplorer = new CostExplorer(ceClient);
+      const costUsage = await costExplorer.getCostAndUsage(startDate, endDate);
+      console.log(JSON.stringify(costUsage));
 
-    callback(null, {
-      statusCode: 200,
-      body: JSON.stringify(ret)
-    });
+      const msg = createMessage(costUsage);
+
+      const sns = new SNS(snsClient);
+      const ret = await sns.publish(msg);
+
+      callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(ret)
+      });
+    }
   } catch (err) {
     callback(err);
   }
