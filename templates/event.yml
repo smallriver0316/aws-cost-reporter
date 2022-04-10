@@ -9,7 +9,7 @@ Resources:
       ScheduleExpression: "cron(0 0 ? * SUN *)"
       State: "ENABLED"
       Targets:
-        - Arn: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:aws-cost-repoter-${self:custom.stage}-costReporter
+        - Arn: arn:aws:lambda:${aws:region}:${aws:accountId}:function:aws-cost-repoter-${self:custom.stage}-costReporter
           Id: CostReporterEventTargetId-${self:custom.stage}
 
   CostReporterLambdaInvokePermission:
