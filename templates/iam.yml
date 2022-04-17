@@ -33,9 +33,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - sns:publish
-                Resource: "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:CostReporterSnsTopic-${self:custom.stage}"
+                Resource: "arn:aws:sns:${aws:region}:${aws:accountId}:CostReporterSnsTopic-${self:custom.stage}"
       Tags:
-        -
-          Key: "AppName"
+        - Key: "AppName"
           Value: "ConstReporter"
-

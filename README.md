@@ -1,4 +1,4 @@
-# aws-cost-reporter
+# AWS Cost Reporter
 
 Lambda set to send information of cost explorer.
 
@@ -53,11 +53,11 @@ npm install
 ## How to deploy
 
 ```bash
-npx serverless deploy -v
+npx serverless deploy
 ```
 
 ## How to remove deployment services
 
 ```bash
-npx serverless remove -v
+npx serverless remove
 ```
