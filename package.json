@@ -4,6 +4,7 @@
   "description": "Lambda set to send information of cost explorer with e-mail",
   "main": "handler.js",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "test": "jest"
   },
   "repository": {
@@ -32,6 +33,10 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.1",
-    "jest": "^27.3.1"
+    "jest": "^27.3.1",
+    "minimist": "^1.2.6"
+  },
+  "resolutions": {
+    "minimist": "^1.2.6"
   }
 }

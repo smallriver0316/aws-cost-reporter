@@ -72,7 +72,7 @@ module.exports.costReporter = async (event, context, callback) => {
     const start = moment().startOf('month');
     const end = moment();
 
-    if (!end.isAfter(start)) {
+    if (!end.isAfter(start, 'day')) {
       const today = start.format('YYYY-MM-DD');
       const msg = `Today is ${today}.\n\nNo Cost is generated yet in this month.`;
       const sns = new SNS(snsClient);
